@@ -1,6 +1,4 @@
 @ECHO off
-mode con:cols=150 
-color 1B 
 TITLE Aion German - Game Server Console
 :START
 CLS
@@ -18,7 +16,7 @@ IF "%NUMAENABLE%" == "true" (
 SET JAVA_OPTS=-XX:+UseNUMA %JAVA_OPTS%
 )
 ECHO Starting Aion German Game Server in %MODE% mode.
-JAVA %JAVA_OPTS% -ea -javaagent:./libs/al-commons.jar -cp ./libs/*;AL-Game.jar com.aionemu.gameserver.GameServer
+%JAVA_HOME%\bin\java.exe %JAVA_OPTS% -ea -javaagent:./libs/al-commons.jar -cp ./libs/*;AL-Game.jar com.aionemu.gameserver.GameServer
 SET CLASSPATH=%OLDCLASSPATH%
 IF ERRORLEVEL 2 GOTO START
 IF ERRORLEVEL 1 GOTO ERROR
