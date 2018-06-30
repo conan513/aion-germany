@@ -447,7 +447,7 @@ public class ChatChannels {
             addJobChannel(Gender.MALE, PlayerClass.SORCERER, "job_Sorcier");
             addJobChannel(Gender.MALE, PlayerClass.SPIRIT_MASTER, "job_Spiritualiste");
             addJobChannel(Gender.MALE, PlayerClass.CHANTER, "job_Aede");
-            addJobChannel(Gender.MALE, PlayerClass.RANGER, "job_RÃ´deur");
+            addJobChannel(Gender.MALE, PlayerClass.RANGER, "job_RA´deur");
             addJobChannel(Gender.MALE, PlayerClass.ASSASSIN, "job_Assassin");
             addJobChannel(Gender.MALE, PlayerClass.CLERIC, "job_Clerc");
             addJobChannel(Gender.MALE, PlayerClass.ENGINEER, "job_engineer");
