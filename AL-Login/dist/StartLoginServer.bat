@@ -12,7 +12,7 @@ echo Starting Aion German Login Server.
 echo.
 REM -------------------------------------
 REM Default parameters for a basic server.
-java -Xms8m -Xmx32m -server -cp ./libs/*;AL-Login.jar com.aionemu.loginserver.LoginServer
+%JAVA_HOME%\bin\java.exe -Xms8m -Xmx32m -server -cp ./libs/*;AL-Login.jar com.aionemu.loginserver.LoginServer
 REM
 REM -------------------------------------
 
