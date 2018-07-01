@@ -73,10 +73,9 @@ public class EnchantItemAction extends AbstractItemAction {
 			return false;
 		}
 		if (targetItem.isEquipped() && targetItem.getItemTemplate().getCategory() == ItemCategory.STIGMA) {
-			String message = "Can't Enchant equiped Stigma";
-			PacketSendUtility.sendMessage(player, message);
+			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_CANT_ENCHANT_EQUIPED);
 			return false;
-		}
+		} 
 		if (targetItem.isAmplified() && parentItem.getItemTemplate().isEnchantmentStone() && player.getInventory().getKinah() < EnchantKinah) {
 			PacketSendUtility.sendPacket(player, SM_SYSTEM_MESSAGE.STR_MSG_NOT_ENOUGH_MONEY);
 			return false;
@@ -89,8 +88,10 @@ public class EnchantItemAction extends AbstractItemAction {
 		int tID = targetItem.getItemTemplate().getTemplateId() / 1000000;
 		int wID = targetItem.getItemTemplate().getTemplateId() / 1000000;
 
-		if (msID != 166 && msID != 167 || msID != 166 && tID >= 120) {
-			return false;
+		if (msID != 166 && msID != 167 || msID != 166 && tID >= 120 || msID !=140 && tID !=140 ) {
+			if (targetItem.getItemTemplate().isBracelet() || targetItem.getItemTemplate().isEstima()) { // Allows Enchant for Estima and Bracelet
+				return true;
+			}
 		} else if (msID != 166) {
 			if (tID >= 120 && wID != 187) {
 				return false;
@@ -151,13 +152,14 @@ public class EnchantItemAction extends AbstractItemAction {
 				// Enchantment stone
 				if (parentItem.getItemTemplate().getCategory() == ItemCategory.ENCHANTMENT || parentItem.getItemTemplate().getCategory() == ItemCategory.AMPLIFICATION) {
 					 // Stigma
-					if (parentItem.getItemTemplate().getCategory() == ItemCategory.ENCHANTMENT && targetItem.getItemTemplate().getCategory() == ItemCategory.STIGMA ||
-						parentItem.getItemTemplate().getCategory() == ItemCategory.STIGMA && parentItem.getItemTemplate().getCategory() == targetItem.getItemTemplate().getCategory()) {
+					if (parentItem.getItemTemplate().getCategory() == ItemCategory.ENCHANTMENT && targetItem.getItemTemplate().getCategory() == ItemCategory.STIGMA) {
 						EnchantService.enchantStigmaAct(player, parentItem, targetItem, currentEnchant, isSuccess);
 					} else {
 						// Item
 						EnchantService.enchantItemAct(player, parentItem, targetItem, currentEnchant, isSuccess);
 					}
+				} else if (parentItem.getItemTemplate().getCategory() == ItemCategory.STIGMA && parentItem.getItemTemplate().getCategory() == targetItem.getItemTemplate().getCategory()) {
+					EnchantService.enchantStigmaAct(player, parentItem, targetItem, currentEnchant, isSuccess);
 				}
 				// Manastone
 				else {
