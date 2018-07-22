@@ -16,20 +16,22 @@
  */
 package com.aionemu.gameserver.network.aion.serverpackets;
 
-import com.aionemu.gameserver.model.gameobjects.player.Player;
+import com.aionemu.gameserver.configs.main.EventsConfig;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
 
 /**
- * @author Falke_34
+ * @author FrozenKiller
  */
-public class SM_UNK_11B extends AionServerPacket {
-
-	private Player player;
+public class SM_YOUTUBE_VIDEO extends AionServerPacket {
 
 	@Override
 	protected void writeImpl(AionConnection con) {
-		writeD(player.getObjectId()); // Player ObjectId
-		writeD(2); // TODO
+		String videoString = EventsConfig.EVENT_YOUTUBE_VIDEO;
+		writeH(1);
+		writeD((int) (System.currentTimeMillis() / 1000));
+		writeS(videoString);
+		writeB(new byte[8]);
+		writeS("1532029853");
 	}
 }

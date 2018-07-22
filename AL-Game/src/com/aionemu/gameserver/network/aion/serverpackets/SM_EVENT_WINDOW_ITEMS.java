@@ -17,12 +17,13 @@
 package com.aionemu.gameserver.network.aion.serverpackets;
 
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.aionemu.commons.database.dao.DAOManager;
+import com.aionemu.gameserver.dao.PlayerEventsWindowDAO;
 import com.aionemu.gameserver.model.templates.event.EventsWindow;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.AionServerPacket;
@@ -41,16 +42,21 @@ public class SM_EVENT_WINDOW_ITEMS extends AionServerPacket {
 
     @Override
     protected void writeImpl(AionConnection aionConnection) {
+    	int playerAccountId = aionConnection.getActivePlayer().getPlayerAccount().getId();
+    	PlayerEventsWindowDAO playerEventsWindowDAO = DAOManager.getDAO(PlayerEventsWindowDAO.class);
         writeC(1); // Do not Change !!!
         writeH(active_events_packet.size());
         for (EventsWindow eventsWindow : active_events_packet) {
+        	int dbRecivedCount = playerEventsWindowDAO.getRewardRecivedCount(playerAccountId, eventsWindow.getId());
+        	int elapsed = playerEventsWindowDAO.getElapsed(playerAccountId, eventsWindow.getId());
+        	int displayTime = (eventsWindow.getRemainingTime() - elapsed);
             log.info("event id " + eventsWindow.getId() + " remain " + eventsWindow.getRemainingTime() + " start-time " + new Timestamp(eventsWindow.getPeriodStart().getMillis()).getTime() / 1000 + " end-time " + new Timestamp(eventsWindow.getPeriodEnd().getMillis()).getTime() / 1000 + " total size " + active_events_packet.size());
             writeD(eventsWindow.getId()); // Id
-            writeD(0); // TODO reward recived count
-            writeD(eventsWindow.getRemainingTime() * 60); //Displayed Remaining Time
+            writeD(dbRecivedCount); // reward recived count
+            writeD(displayTime * 60); //Displayed Remaining Time
             writeD(0); // Do not Change !!!
-            writeD(0);// TODO reward recived count
-            writeD((int) (Calendar.getInstance().getTimeInMillis() / 1000)); // PlayerLoginTime
+            writeD(eventsWindow.getMaxCountOfDay());// This is Max Count of Day
+            writeD((int) (System.currentTimeMillis() / 1000)); // PlayerLoginTime
             writeC(1); // Do not Change !!!
             writeD(5); // Do not Change !!!
             writeD(1); // Do not Change !!!
@@ -58,12 +64,14 @@ public class SM_EVENT_WINDOW_ITEMS extends AionServerPacket {
             writeC(98); // Do not Change !!!
             writeC(21); // Do not Change !!!
             writeC(0); // Do not Change !!!
-            writeD(eventsWindow.getRemainingTime()); // Remaining Time
+            writeD(displayTime * 60); // Remaining Time
             writeD(eventsWindow.getItemId());  // ItemId
             writeQ(eventsWindow.getCount()); // ItemCount
-            writeD(126); // Do not Change !!! This ist the Max Count of Day !!
-            writeQ(new Timestamp(eventsWindow.getPeriodStart().getMillis()).getTime() / 1000); // Period Start TimeStamp
-            writeQ(new Timestamp(eventsWindow.getPeriodEnd().getMillis()).getTime() / 1000); // Period End TimeSTamp
+            writeD(eventsWindow.getMaxCountOfDay()); // This is Max Count of Day
+            writeD((int) (eventsWindow.getPeriodStart().getMillis() / 1000)); // Period Start TimeStamp
+            writeD(0);
+            writeD((int) (eventsWindow.getPeriodEnd().getMillis() / 1000)); // Period End TimeSTamp
+            writeD(0);
             writeD(0);//Does something
             writeD(0); // If player has this Item already in inventory it's ItemId
             writeD(1090157056); // Do not Change !!!
@@ -72,10 +80,8 @@ public class SM_EVENT_WINDOW_ITEMS extends AionServerPacket {
             writeD(-1);// Do not Change !!!
             writeB(new byte[84]); // Do not Change !!!
             writeD(-1);// Do not Change !!!
-            writeB(new byte[8]);// Do not Change !!!
-            writeD(1);// Do not Change !!!
-            writeD(9);// Do not Change !!!
-            writeD(1);// Do not Change !!! //How many time you can get this reward
+            writeB(new byte[16]);
+            writeD(2147483647);// Do not Change !!!
             writeB(new byte[7]);// Do not Change !!!
             writeD(-1);// Do not Change !!!
             writeD(0);// Do not Change !!!
