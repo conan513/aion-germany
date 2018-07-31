@@ -1,22 +1,37 @@
-#### Aion EU Emulator
-#### Version: 5.8
+![](http://falke34.bplaced.net/Splash01.png)
+
+# Aion EU Emulator
+### Version: 5.8
 
 **Client:** [Gameforge](https://de.aion.gameforge.com/website/download/) **+** [Launcher](https://github.com/AionGermany/aion-germany/blob/master/AL-Tools/AionLauncherEU_5.x.rar)
 
+```sh
+Launcher Settings (add this to your config File):
+-f2p
+-megaphone
+-aiontv
+```
+
 **Help and Support:** [Aion EU Forum](http://falke34.bplaced.net)
 
-#### Todo (Static Data):
+### Todo:
+```sh
+Static Data:
 * Divine Fortress and Artifact Spawns
 * Nosra + Esterra Spawns
+```
 
-#### Todo (Data):
+```sh
+Data:
 * add/write new Quest Scipts
 * repair some Quest Scripts
 
 * write new Instance Scripts
 * fix some Instance Scripts
+```
 
-#### Todo (Source):
+```sh
+Source:
 * Stigma Enchant 
 - add/find Bonus Stigma Slot and add Sigma Enchant Bonus
 - fix Stigma with Stigma Enchant
@@ -30,3 +45,5 @@
 
 * Skill Enhance
 - this change the Skills not + the Skills
+
+```
