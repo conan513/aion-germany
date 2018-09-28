@@ -92,4 +92,9 @@ public class HaramelInstance extends GeneralInstanceHandler {
 	public void onPlayerLogOut(Player player) {
 		TeleportService2.moveToInstanceExit(player, mapId, player.getRace());
 	}
+
+	@Override
+	public void onExitInstance(Player player) {
+		TeleportService2.moveToInstanceExit(player, mapId, player.getRace());
+	}
 }

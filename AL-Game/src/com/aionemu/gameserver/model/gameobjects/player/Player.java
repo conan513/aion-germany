@@ -49,7 +49,7 @@ import com.aionemu.gameserver.model.WorldBuff;
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.actions.PlayerActions;
 import com.aionemu.gameserver.model.actions.PlayerMode;
-import com.aionemu.gameserver.model.cp.PlayerCPList;
+import com.aionemu.gameserver.model.cubics.PlayerMCList;
 import com.aionemu.gameserver.model.dorinerk_wardrobe.PlayerWardrobeList;
 import com.aionemu.gameserver.model.event_window.PlayerEventWindowList;
 import com.aionemu.gameserver.model.gameobjects.Creature;
@@ -81,7 +81,6 @@ import com.aionemu.gameserver.model.items.storage.IStorage;
 import com.aionemu.gameserver.model.items.storage.LegionStorageProxy;
 import com.aionemu.gameserver.model.items.storage.Storage;
 import com.aionemu.gameserver.model.items.storage.StorageType;
-import com.aionemu.gameserver.model.monsterbook.PlayerMonsterbookList;
 import com.aionemu.gameserver.model.skill.PlayerSkillList;
 import com.aionemu.gameserver.model.skinskill.SkillSkinList;
 import com.aionemu.gameserver.model.stats.container.PlayerGameStats;
@@ -314,14 +313,12 @@ public class Player extends Creature {
 	private int transformModelId;
 	private int transformItemId;
 	private int transformPanelId;
-	private PlayerCPList cp;
-	private int cp_slot1 = 0, cp_slot2 = 0, cp_slot3 = 0, cp_slot4 = 0, cp_slot5 = 0, cp_slot6 = 0;
 	private PlayerWardrobeList wardrobe;
 	private PlayerLunaShop lunaShop;
 	private PlayerSweep shugoSweep;
-	private PlayerMonsterbookList monsterbook;
 	private boolean setMinionSpawned;
 	private EquipmentSettingList equipmentSettingList;
+	private PlayerMCList mc;
 
 	/**
 	 * Player Skill Skin List
@@ -1156,8 +1153,7 @@ public class Player extends Creature {
 	}
 
 	/**
-	 * @param start
-	 *            : The time in ms of start prison
+	 * @param start The time in ms of start prison
 	 */
 	public void setStartPrison(long start) {
 		this.startPrison = start;
@@ -2125,7 +2121,7 @@ public class Player extends Creature {
 	}
 
 	/**
-	 * @param stoneItemId
+	 * @param stoneId
 	 * @return stoneItem or null
 	 */
 	private Item getReviveStone(int stoneId) {
@@ -2966,88 +2962,6 @@ public class Player extends Creature {
 	}
 
 	/**
-	 * @High Daeva
-	 */
-	public boolean isHighDaeva() {
-		return getCommonData().isHighDaeva();
-	}
-
-	/**
-	 * Creativity Points
-	 */
-	public PlayerCPList getCP() {
-		return cp;
-	}
-
-	public void setCP(PlayerCPList cp) {
-		this.cp = cp;
-	}
-
-	public int getCreativityPoint() {
-		return getCommonData().getCreativityPoint();
-	}
-
-	public void setCreativityPoint(int point) {
-		getCommonData().setCreativityPoint(point);
-	}
-
-	public int getCPStep() {
-		return getCommonData().getCPStep();
-	}
-
-	public void setCPStep(int step) {
-		getCommonData().setCPStep(step);
-	}
-
-	public int getCPSlot1() {
-		return cp_slot1;
-	}
-
-	public void setCPSlot1(int point) {
-		this.cp_slot1 = point;
-	}
-
-	public int getCPSlot2() {
-		return cp_slot2;
-	}
-
-	public void setCPSlot2(int point) {
-		this.cp_slot2 = point;
-	}
-
-	public int getCPSlot3() {
-		return cp_slot3;
-	}
-
-	public void setCPSlot3(int point) {
-		this.cp_slot3 = point;
-	}
-
-	public int getCPSlot4() {
-		return cp_slot4;
-	}
-
-	public void setCPSlot4(int point) {
-		this.cp_slot4 = point;
-	}
-
-	public int getCPSlot5() {
-		return cp_slot5;
-	}
-
-	public void setCPSlot5(int point) {
-		this.cp_slot5 = point;
-	}
-
-	public int getCPSlot6() {
-		return cp_slot6;
-	}
-
-	public void setCPSlot6(int point) {
-		this.cp_slot6 = point;
-	}
-
-	/**
 	 * Luna System
 	 */
 	public PlayerWardrobeList getWardrobe() {
@@ -3113,17 +3027,6 @@ public class Player extends Creature {
 	public int getWardrobeSlot() {
 		return this.playerCommonData.getWardrobeSlot();
 	}
-
-	/**
-	 * Monsterbook
-	 */
-    public PlayerMonsterbookList getMonsterbook() {
-        return this.monsterbook;
-    }
-    
-    public void setMonsterbook(final PlayerMonsterbookList monsterbook) {
-        this.monsterbook = monsterbook;
-    }
 
 	/**
 	 * Tower of Challenge
@@ -3193,4 +3096,19 @@ public class Player extends Creature {
 		this.skillSkinList = skillSkinList;
 		skillSkinList.setOwner(this);
 	}
+	
+	/**
+	 * Add Tag Wedding
+	 */
+	public int getPartnerId() { 
+		return this.partnerId;
+	}
+	
+	public PlayerMCList getMonsterCubic() {
+               return this.mc;
+        }
+
+        public void setMonsterCubic(PlayerMCList playerABList) {
+               this.mc = playerABList;
+        }
 }

@@ -51,7 +51,6 @@ import com.aionemu.gameserver.configs.main.CustomConfig;
 import com.aionemu.gameserver.configs.main.EventsConfig;
 import com.aionemu.gameserver.configs.main.GSConfig;
 import com.aionemu.gameserver.configs.main.MembershipConfig;
-import com.aionemu.gameserver.configs.main.PanesterraConfig;
 import com.aionemu.gameserver.configs.main.SiegeConfig;
 import com.aionemu.gameserver.configs.main.ThreadConfig;
 import com.aionemu.gameserver.configs.main.WeddingsConfig;
@@ -69,49 +68,36 @@ import com.aionemu.gameserver.network.aion.GameConnectionFactoryImpl;
 import com.aionemu.gameserver.network.chatserver.ChatServer;
 import com.aionemu.gameserver.network.loginserver.LoginServer;
 import com.aionemu.gameserver.questEngine.QuestEngine;
-import com.aionemu.gameserver.services.AbyssLandingService;
-import com.aionemu.gameserver.services.AbyssLandingSpecialService;
 import com.aionemu.gameserver.services.AdminService;
-import com.aionemu.gameserver.services.AgentFightService;
 import com.aionemu.gameserver.services.AnnouncementService;
 import com.aionemu.gameserver.services.BaseService;
-import com.aionemu.gameserver.services.BeritraService;
 import com.aionemu.gameserver.services.BrokerService;
 import com.aionemu.gameserver.services.ChallengeTaskService;
 import com.aionemu.gameserver.services.DatabaseCleaningService;
 import com.aionemu.gameserver.services.DebugService;
-import com.aionemu.gameserver.services.DiflodoxService;
-import com.aionemu.gameserver.services.DiflonaxService;
 import com.aionemu.gameserver.services.DisputeLandService;
 import com.aionemu.gameserver.services.ExchangeService;
 import com.aionemu.gameserver.services.FlyRingService;
 import com.aionemu.gameserver.services.GameTimeService;
 import com.aionemu.gameserver.services.HousingBidService;
 import com.aionemu.gameserver.services.LimitedItemTradeService;
-import com.aionemu.gameserver.services.MoltenusService;
 import com.aionemu.gameserver.services.NpcShoutsService;
 import com.aionemu.gameserver.services.PeriodicSaveService;
 import com.aionemu.gameserver.services.RestartService;
 import com.aionemu.gameserver.services.RiftService;
 import com.aionemu.gameserver.services.RoadService;
-import com.aionemu.gameserver.services.RvrService;
 import com.aionemu.gameserver.services.ShieldService;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.services.StigmaService;
 import com.aionemu.gameserver.services.SupportService;
-import com.aionemu.gameserver.services.SvsService;
 import com.aionemu.gameserver.services.TownService;
 import com.aionemu.gameserver.services.VortexService;
 import com.aionemu.gameserver.services.WeatherService;
 import com.aionemu.gameserver.services.WeddingService;
 import com.aionemu.gameserver.services.WorldBuffService;
 import com.aionemu.gameserver.services.abyss.AbyssRankUpdateService;
-import com.aionemu.gameserver.services.abysslandingservice.LandingUpdateService;
 import com.aionemu.gameserver.services.conquerer_protector.ConquerorsService;
 import com.aionemu.gameserver.services.drop.DropRegistrationService;
-import com.aionemu.gameserver.services.dynamic_world.AdmaPortalSpawnService;
-import com.aionemu.gameserver.services.dynamic_world.LaboratoryPortalSpawnService;
-import com.aionemu.gameserver.services.dynamic_world.TowerEntranceService;
 import com.aionemu.gameserver.services.events.AtreianPassportService;
 import com.aionemu.gameserver.services.events.BoostEventService;
 import com.aionemu.gameserver.services.events.EventService;
@@ -131,6 +117,7 @@ import com.aionemu.gameserver.services.instance.SanctumBattlefieldService;
 import com.aionemu.gameserver.services.instance.SteelWallBastionBattlefieldService;
 import com.aionemu.gameserver.services.player.FatigueService;
 import com.aionemu.gameserver.services.player.LunaShopService;
+import com.aionemu.gameserver.services.player.PlayerCubicService;
 import com.aionemu.gameserver.services.player.PlayerEventService;
 import com.aionemu.gameserver.services.player.PlayerLimitService;
 import com.aionemu.gameserver.services.reward.OnlineBonus;
@@ -256,6 +243,8 @@ public class GameServer {
 		EventWindowService.getInstance().initialize();
 		Util.printSsSection(" ### Shugo Sweep initialization ### ");
 		ShugoSweepService.getInstance().initShugoSweep();
+		Util.printSsSection(" ### Cubic Monster initialization ### ");
+        PlayerCubicService.getInstance();
 		Util.printSection(" ### GeoData ### ");
 		GeoService.getInstance().initializeGeo();
 		DropRegistrationService.getInstance();
@@ -284,9 +273,6 @@ public class GameServer {
 		// No Siege schedule or spawns
 		Util.printSection(" ### Siege Location Data ### ");
 		BaseService.getInstance().initBaseLocations();
-		BeritraService.getInstance().initBeritraLocations();
-		RvrService.getInstance().initRvrLocations();
-		SvsService.getInstance().initSvsLocations();
 		SiegeService.getInstance().initSiegeLocations();
 		VortexService.getInstance().initVortexLocations();
 		RiftService.getInstance().initRiftLocations();
@@ -313,36 +299,13 @@ public class GameServer {
 			ShieldService.getInstance().spawnAll();
 		}
 		SiegeService.getInstance().initSieges();
-		AgentFightService.getInstance().initAgentFight();
-		MoltenusService.getInstance().initMoltenus();
-		DiflodoxService.getInstance().initDiflodox(); // 4.9
-		DiflonaxService.getInstance().initDiflonax(); // 4.9
-		AbyssLandingService.getInstance().initLandingLocations();
-		LandingUpdateService.getInstance().initResetQuestPoints();
-		LandingUpdateService.getInstance().initResetAbyssLandingPoints();
-		AbyssLandingSpecialService.getInstance().initLandingSpecialLocations();
 		DisputeLandService.getInstance().initDisputeLand();
-		TowerEntranceService.getInstance().startTowerEntrance();
 		Util.printSsSection("Bases");
 		if (BaseConfig.BASE_ENABLED) {
 			BaseService.getInstance().initBases();
 		}
 		else {
 			BaseService.getInstance().basesDisabled();
-		}
-		Util.printSsSection("RvR");
-		if (PanesterraConfig.SVS_ENABLED) {
-			RvrService.getInstance().initRvr();
-		}
-		else {
-			RvrService.getInstance().RvrDisabled();
-		}
-		Util.printSsSection("Panesterra");
-		if (PanesterraConfig.SVS_ENABLED) {
-			SvsService.getInstance().initSvs();
-		}
-		else {
-			SvsService.getInstance().SvsDisabled();
 		}
 		Util.printSection(" ### Cleaning ### ");
 		DatabaseCleaningService.getInstance();
@@ -351,8 +314,6 @@ public class GameServer {
 		PacketBroadcaster.getInstance();
 		PeriodicSaveService.getInstance();
 		TaskFromDBManager.getInstance();
-		LaboratoryPortalSpawnService.getInstance().startLaboratory();
-		AdmaPortalSpawnService.getInstance().startAdma();
 		Util.printSection(" ### Services ### ");
 		if (EventsConfig.ENABLE_BOOST_EVENTS) {
 			BoostEventService.getInstance().onStart();

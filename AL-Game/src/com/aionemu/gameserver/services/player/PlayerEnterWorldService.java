@@ -148,7 +148,6 @@ import com.aionemu.gameserver.services.events.EventWindowService;
 import com.aionemu.gameserver.services.events.ShugoSweepService;
 import com.aionemu.gameserver.services.instance.InstanceService;
 import com.aionemu.gameserver.services.mail.MailService;
-import com.aionemu.gameserver.services.player.CreativityPanel.CreativityEssenceService;
 import com.aionemu.gameserver.services.teleport.TeleportService2;
 import com.aionemu.gameserver.services.territory.TerritoryService;
 import com.aionemu.gameserver.services.toypet.MinionService;
@@ -215,8 +214,25 @@ public final class PlayerEnterWorldService {
 	public static final void startEnterWorld(final int objectId, final AionConnection client) {
 		// check if char is banned
 		PlayerAccountData playerAccData = client.getAccount().getPlayerAccountData(objectId);
+
+        if (playerAccData == null) {
+            log.warn("playerAccData == null " + objectId);
+            if (client != null) {
+                client.closeNow();
+            }
+            return;
+        }
+        if (playerAccData.getPlayerCommonData() == null) {
+            log.warn("playerAccData.getPlayerCommonData() == null " + objectId);
+            if (client != null) {
+                client.closeNow();
+            }
+            return;
+        }
+
 		Timestamp lastOnline = playerAccData.getPlayerCommonData().getLastOnline();
-		if (lastOnline != null && client.getAccount().getAccessLevel() < AdminConfig.GM_LEVEL) {
+		Player edit = playerAccData.getPlayerCommonData().getPlayer();
+		if (lastOnline != null && client.getAccount().getAccessLevel() < AdminConfig.GM_LEVEL && edit != null && !edit.isInEditMode()) {
 			if (System.currentTimeMillis() - lastOnline.getTime() < (GSConfig.CHARACTER_REENTRY_TIME * 1000)) {
 				client.sendPacket(new SM_ENTER_WORLD_CHECK((byte) 6)); // 20 sec time
 				client.sendPacket(new SM_AFTER_TIME_CHECK());// TODO
@@ -320,6 +336,7 @@ public final class PlayerEnterWorldService {
 			player.setClientConnection(client);
 
 			log.info("[MAC_AUDIT] Player " + player.getName() + " (account " + account.getName() + ") has entered world with " + client.getMacAddress() + " MAC.");
+            log.info("[HDD_AUDIT] Player " + player.getName() + " (account " + account.getName() + ") has entered world with " + client.getHddSerial() + " HDD.");
 			World.getInstance().storeObject(player);
 
 			StigmaService.onPlayerLogin(player);
@@ -457,9 +474,6 @@ public final class PlayerEnterWorldService {
 			// SM_MOTION
 			client.sendPacket(new SM_MOTION(player.getMotions().getMotions().values()));
 
-			// MONSTERBOOK
-			MonsterbookService.getInstance().onLogin(player);
-
 			// SM_ENTER_WORLD_CHECK
 			client.sendPacket(new SM_ENTER_WORLD_CHECK());
 
@@ -478,6 +492,8 @@ public final class PlayerEnterWorldService {
 			// SM_UNK_154
 //			client.sendPacket(new SM_UNK_154()); // TODO 5.6
 
+            PlayerCubicService.getInstance().onLogin(player);
+
 			// SM_UI_SETTINGS
 			byte[] uiSettings = player.getPlayerSettings().getUiSettings();
 			byte[] shortcuts = player.getPlayerSettings().getShortcuts();
@@ -493,9 +509,6 @@ public final class PlayerEnterWorldService {
 			// SM_ITEM_COOLDOWN
 			if (player.getItemCoolDowns() != null)
 				client.sendPacket(new SM_ITEM_COOLDOWN(player.getItemCoolDowns()));
-
-			// Creativity Points
-			CreativityEssenceService.getInstance().onLogin(player);
 
 			// SM_INVENTORY_INFO, SM_CHANNEL_INFO, SM_STATS_INFO
 			// and SM_CUBE_UPDATE advancedStigmas ?! (not on offi)
@@ -937,7 +950,6 @@ public final class PlayerEnterWorldService {
 
 			// EnchantService.getGloryShield(player);
 			LunaShopService.getInstance().onLogin(player);
-			MonsterbookService.getInstance().onLogin(player);
 		}
 		else
 			log.info("[DEBUG] enter world" + objectId + ", Player: " + player);

@@ -51,7 +51,6 @@ import com.aionemu.gameserver.model.gameobjects.player.QuestStateList;
 import com.aionemu.gameserver.model.gameobjects.player.RewardType;
 import com.aionemu.gameserver.model.gameobjects.player.npcFaction.NpcFaction;
 import com.aionemu.gameserver.model.items.ItemId;
-import com.aionemu.gameserver.model.landing.LandingPointsEnum;
 import com.aionemu.gameserver.model.skill.PlayerSkillEntry;
 import com.aionemu.gameserver.model.team2.alliance.PlayerAlliance;
 import com.aionemu.gameserver.model.team2.common.legacy.LootRuleType;
@@ -105,8 +104,7 @@ import com.google.common.collect.Multimap;
 public final class QuestService {
 
 	static QuestsData questsData = DataManager.QUEST_DATA;
-	private static final Logger log = LoggerFactory.getLogger(QuestService.class);
-	private static final Logger log2 = LoggerFactory.getLogger("QUEST_LOG"); 
+	private static final Logger log = LoggerFactory.getLogger("QUEST_LOG"); 
 	private static Multimap<Integer, QuestDrop> questDrop = ArrayListMultimap.create();
 
 	public static boolean finishQuest(QuestEnv env) {
@@ -393,16 +391,6 @@ public final class QuestService {
 		}
 		if (rewards.getRewardGloryPoint() != null) {
 			AbyssPointsService.addGp(player, (int) (player.getRates().getQuestApRate() * rewards.getRewardGloryPoint()));
-		}
-		// Abyss Landing 4.9.1
-		if (rewards.getRewardAbyssOpPoint() != null) {
-			AbyssLandingService.getInstance().AnnounceToPoints(player, null, null, rewards.getRewardAbyssOpPoint(), LandingPointsEnum.QUEST);
-			if (player.getRace() == Race.ASMODIANS) {
-				AbyssLandingService.getInstance().updateHarbingerLanding(rewards.getRewardAbyssOpPoint(), LandingPointsEnum.QUEST, true);
-			}
-			if (player.getRace() == Race.ELYOS) {
-				AbyssLandingService.getInstance().updateRedemptionLanding(rewards.getRewardAbyssOpPoint(), LandingPointsEnum.QUEST, true);
-			}
 		}
 		// Growth Energy 5.x
 		if (rewards.getExpBoost() != null) {
@@ -700,7 +688,7 @@ public final class QuestService {
 		QuestState qs = qsl.getQuestState(id);
 		QuestTemplate template = questsData.getQuestById(env.getQuestId());
 		if (template == null) {
-			log2.info("[QuestService] Can't find Quest: " + env.getQuestId() + " in quest_data.xml");
+			log.info("[QuestService] Can't find Quest: " + env.getQuestId() + " in quest_data.xml");
 			return false;
 		}
 		if (template.getNpcFactionId() != 0) {

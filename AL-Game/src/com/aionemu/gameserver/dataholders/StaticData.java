@@ -203,12 +203,6 @@ public class StaticData {
 	public AtreianPassportData atreianPassportData;
 	@XmlElement(name = "base_locations")
 	public BaseData baseData;
-	@XmlElement(name = "beritra_invasion")
-	public BeritraData beritraData;
-	@XmlElement(name = "svs")
-	public SvsData svsData;
-	@XmlElement(name = "rvr")
-	public RvrData rvrData;
 	@XmlElement(name = "abyss_bonusattrs")
 	public AbyssBuffData abyssBuffData;
 	@XmlElement(name = "abyss_groupattrs")
@@ -235,22 +229,12 @@ public class StaticData {
 	public PetBuffData petBuffData;
 	@XmlElement(name = "merchants")
 	public PetMerchandData petMerchandData;
-	@XmlElement(name = "panel_cps")
-	public PanelCpData panelCpData;
 	@XmlElement(name = "f2p_bonus")
 	public F2PBonusData f2pBonus;
-	@XmlElement(name = "abyss_ops")
-	public AbyssOpData abyssOpData;
-	@XmlElement(name = "landing")
-	public LandingData landingLocationData;
-	@XmlElement(name = "landing_special")
-	public LandingSpecialData landingSpecialLocationData;
 	@XmlElement(name = "luna_consume_rewards")
 	public LunaConsumeRewardsData lunaConsumeRewardsData;
 	@XmlElement(name = "minions")
 	public MinionData minionData;
-    @XmlElement(name = "monster_books")
-    public MonsterbookData monsterbookData;
 	@XmlElement(name = "boost_events")
 	public BoostEventData boostEvents;
 	@XmlElement(name="skill_skins")
@@ -261,6 +245,8 @@ public class StaticData {
     public ItemSkillEnhanceData itemSkillEnhance;
 	@XmlElement(name = "shugo_sweeps")
 	public ShugoSweepRewardData shugoSweepsRewardData;
+	@XmlElement(name = "cubics_templates")
+    public CubicsData cubicsData;
 
 	// JAXB callback
 	@SuppressWarnings("unused")
@@ -351,9 +337,6 @@ public class StaticData {
 		DataManager.log.info("[DataManager] Loaded " + arcadeUpgradeData.size() + " arcade upgrade entries");
 		DataManager.log.info("[DataManager] Loaded " + atreianPassportData.size() + " atreian passports");
 		DataManager.log.info("[DataManager] Loaded " + baseData.size() + " base entries");
-		DataManager.log.info("[DataManager] Loaded " + beritraData.size() + " beritra invasion entries");
-		DataManager.log.info("[DataManager] Loaded " + svsData.size() + " s.v.s entries");
-		DataManager.log.info("[DataManager] Loaded " + rvrData.size() + " r.v.r entries");
 		DataManager.log.info("[DataManager] Loaded " + abyssBuffData.size() + " abyss bonus entries");
 		DataManager.log.info("[DataManager] Loaded " + abyssGroupData.size() + " abyss bonus group entries");
 		DataManager.log.info("[DataManager] Loaded " + absoluteStatsData.size() + " absolute stat templates");
@@ -366,19 +349,15 @@ public class StaticData {
 		DataManager.log.info("[DataManager] Loaded " + playersBonusData.size() + " player bonus entries");
 		DataManager.log.info("[DataManager] Loaded " + petBuffData.size() + " Pets Buff entries");
 		DataManager.log.info("[DataManager] Loaded " + petMerchandData.size() + " Pets Merchant entries");
-		DataManager.log.info("[DataManager] Loaded " + panelCpData.size() + " Creativity Template entries");
 		DataManager.log.info("[DataManager] Loaded " + f2pBonus.size() + " F2P Bonus entries");
-		DataManager.log.info("[DataManager] Loaded " + abyssOpData.size() + " Abyss Landing entries");
-		DataManager.log.info("[DataManager] Loaded " + landingLocationData.size() + " Abyss Landing entries");
-		DataManager.log.info("[DataManager] Loaded " + landingSpecialLocationData.size() + " Abyss Monument entries");
 		DataManager.log.info("[DataManager] Loaded " + lunaConsumeRewardsData.size() + " Luna Consume entries");
 		DataManager.log.info("[DataManager] Loaded " + minionData.size() + " Minion templates");
-		DataManager.log.info("[DataManager] Loaded " + monsterbookData.size() + " Monsterbook templates");
 		DataManager.log.info("[DataManager] Loaded " + boostEvents.size() + " Boost Event templates");
 		DataManager.log.info("[DataManager] Loaded " + itemCustomSetData.size() + " Item Custom Set templates");
 		DataManager.log.info("[DataManager] Loaded " + skillSkinData.size() + " Skill Animation entries");
 		DataManager.log.info("[DataManager] Loaded " + eventsWindow.size() + " Events Window entries");
 		DataManager.log.info("[DataManager] Loaded " + itemSkillEnhance.size() + " Skill Boost entries");
 		DataManager.log.info("[DataManager] Loaded " + shugoSweepsRewardData.size() + " Shugo Sweep Reward entries");
+		DataManager.log.info("[DataManager] Loaded " + cubicsData.size() + " Cubics entries");
 	}
 }

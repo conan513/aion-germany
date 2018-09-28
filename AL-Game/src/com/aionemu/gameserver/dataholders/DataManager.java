@@ -119,9 +119,6 @@ public final class DataManager {
 	public static HotspotTeleporterData HOTSPOT_TELEPORTER_DATA;
 	public static AtreianPassportData ATREIAN_PASSPORT_DATA;
 	public static BaseData BASE_DATA;
-	public static BeritraData BERITRA_DATA;
-	public static SvsData SVS_DATA;
-	public static RvrData RVR_DATA;
 	public static AbyssBuffData ABYSS_BUFF_DATA;
 	public static AbyssGroupData ABYSS_GROUP_DATA;
 	public static AbsoluteStatsData ABSOLUTE_STATS_DATA;
@@ -134,20 +131,16 @@ public final class DataManager {
 	public static PlayersBonusData PLAYERS_BONUS_DATA;
 	public static PetBuffData PET_BUFF_DATA;
 	public static PetMerchandData PET_MERCHAND_DATA;
-	public static PanelCpData PANEL_CP_DATA;
 	public static F2PBonusData F2P_BONUS_DATA;
-	public static AbyssOpData ABYSS_OP_DATA;
-	public static LandingData LANDING_LOCATION_DATA;
-	public static LandingSpecialData LANDING_SPECIAL_LOCATION_DATA;
 	public static LunaConsumeRewardsData LUNA_CONSUME_REWARDS_DATA;
 	public static MinionData MINION_DATA;
-	public static MonsterbookData MONSTERBOOK_DATA;
 	public static BoostEventData BOOST_EVENT_DATA;
 	public static ItemCustomSetData ITEM_CUSTOM_SET_DATA;
 	public static SkillSkinData SKILL_SKIN_DATA;
 	public static EventsWindowData EVENTS_WINDOW;
 	public static ItemSkillEnhanceData ITEM_SKILL_ENHANCE_DATA;
 	public static ShugoSweepRewardData SHUGO_SWEEP_REWARD_DATA;
+	public static CubicsData CUBICS_DATA;
 	private XmlDataLoader loader;
 
 	/**
@@ -251,9 +244,6 @@ public final class DataManager {
 		HOTSPOT_TELEPORTER_DATA = data.hotspotTeleporterData;
 		ATREIAN_PASSPORT_DATA = data.atreianPassportData;
 		BASE_DATA = data.baseData;
-		BERITRA_DATA = data.beritraData;
-		SVS_DATA = data.svsData;
-		RVR_DATA = data.rvrData;
 		ABYSS_BUFF_DATA = data.abyssBuffData;
 		ABYSS_GROUP_DATA = data.abyssGroupData;
 		ABSOLUTE_STATS_DATA = data.absoluteStatsData;
@@ -267,20 +257,16 @@ public final class DataManager {
 		PLAYERS_BONUS_DATA = data.playersBonusData;
 		PET_BUFF_DATA = data.petBuffData;
 		PET_MERCHAND_DATA = data.petMerchandData;
-		PANEL_CP_DATA = data.panelCpData;
 		F2P_BONUS_DATA = data.f2pBonus;
-		ABYSS_OP_DATA = data.abyssOpData;
-		LANDING_LOCATION_DATA = data.landingLocationData;
-		LANDING_SPECIAL_LOCATION_DATA = data.landingSpecialLocationData;
 		LUNA_CONSUME_REWARDS_DATA = data.lunaConsumeRewardsData;
 		MINION_DATA = data.minionData;
-		MONSTERBOOK_DATA = data.monsterbookData;
 		BOOST_EVENT_DATA = data.boostEvents;
 		ITEM_CUSTOM_SET_DATA = data.itemCustomSetData;
 		SKILL_SKIN_DATA = data.skillSkinData;
 		EVENTS_WINDOW = data.eventsWindow;
 		ITEM_SKILL_ENHANCE_DATA = data.itemSkillEnhance;
 		SHUGO_SWEEP_REWARD_DATA = data.shugoSweepsRewardData;
+		CUBICS_DATA = data.cubicsData; //6.0
 		ITEM_DATA.cleanup();
 
 		// some sexy time message

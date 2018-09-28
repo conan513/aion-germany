@@ -72,7 +72,9 @@
     <import file="instance_cooltimes/instance_cooltimes.xml"/>
     <import file="item_sets/item_sets.xml"/>
     <import file="items/item_restriction_cleanups.xml"/>
-    <import file="items/item_templates.xml"/>
+    <item_templates>
+        <import file="items/item" skipRoot="true"/>
+    </item_templates>
     <import file="items/item_custom_sets.xml"/>
     <import file="items/item_random_bonuses.xml"/>
     <import file="items/item_groups.xml"/>
@@ -169,9 +171,6 @@
         <import file="town_spawns" skipRoot="true"/>
     </town_spawns_data>
     <import file="locations/base/base_locations.xml"/>
-    <import file="locations/beritra/beritra_invasion.xml"/>
-	<import file="locations/svs/svs.xml"/>
-	<import file="locations/rvr/rvr.xml"/>
     <import file="skills/skill_charge.xml"/>
     <import file="items/item_upgrades.xml"/>
     <import file="decomposable_items/decomposable_selectitems.xml"/>
@@ -193,20 +192,11 @@
     <merchants>
         <import file="pets/pet_merchant.xml" skipRoot="true"/>
     </merchants>
-	<panel_cps>
-		<import file="creativity/panel_cps.xml" skipRoot="true"/>
-	</panel_cps>
-	<abyss_ops>
-		<import file="abyss_op/abyss_ops.xml" skipRoot="true"/>
-	</abyss_ops>
-	<import file="locations/abyss_landing/landing_locations.xml"/>
-	<import file="locations/abyss_landing/landing_special_locations.xml"/>
 	<import file="abyss_bonusattr/abyss_bonusattr.xml"/>
 	<import file="abyss_bonusattr/abyss_groupattr.xml"/>
 	<luna_consume_rewards>
 		<import file="luna/luna_consume_rewards.xml" skipRoot="true"/>
 	</luna_consume_rewards>
-	<import file="monster_book/monster_books.xml"/>
 	<import file="events_config/boost_events.xml"/>
 	<skill_skins>
         <import file="skill_skins" skipRoot="true"/>
@@ -216,4 +206,5 @@
 	</events_window>
 	<import file="items/item_skill_enhances.xml"/>
 	<import file="events_config/shugo_sweep.xml"/>
+	<import file="cubics/cubics_templates.xml"/>
 </ae_static_data>

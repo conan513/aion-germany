@@ -203,7 +203,7 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_PLAYER_LEGION_JOIN_REQUEST_INFO.class, 0x137, idSet); // 5.6
 		addPacketOpcode(SM_LEGION_JOIN_REQUEST_LIST.class, 0x138, idSet); // 5.6
 		//addPacketOpcode(SM_LEGION_JOIN_REQUEST_FROM_PLAYER.class, 0x138, idSet);
-		addPacketOpcode(SM_LEGION_ANSWER_JOIN_REQUEST.class, 0x141, idSet);
+		addPacketOpcode(SM_LEGION_ANSWER_JOIN_REQUEST.class, 0x13A, idSet); // 6.x TODO
 		addPacketOpcode(SM_STONESPEAR_SIEGE.class, 0x130, idSet); // 5.6 TODO
 		//addPacketOpcode(SM_LEGION_JOIN_SETTING.class, 0x13E, idSet); // TODO
 		addPacketOpcode(SM_LEGION_SEARCH.class, 0x135, idSet); // 5.6
@@ -229,7 +229,7 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_BIND_POINT_INFO.class, 0xEC, idSet);
 		addPacketOpcode(SM_RIFT_ANNOUNCE.class, 0xED, idSet);
 		addPacketOpcode(SM_ABYSS_RANK.class, 0xEF, idSet); // 5.6
-		addPacketOpcode(SM_PETITION.class, 0x170, idSet); // 5.6 TODO
+		//addPacketOpcode(SM_PETITION.class, 0x170, idSet); // 5.6 TODO
 		addPacketOpcode(SM_FRIEND_UPDATE.class, 0xF2, idSet); // 5.6
 		addPacketOpcode(SM_LEARN_RECIPE.class, 0xF3, idSet); // 5.6
 		addPacketOpcode(SM_RECIPE_DELETE.class, 0xF4, idSet); // 5.6
@@ -273,7 +273,7 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_HOTSPOT_TELEPORT.class, 0x12A, idSet); // 5.6
 		addPacketOpcode(SM_UPGRADE_ARCADE.class, 0x12C, idSet); // 5.6
 		addPacketOpcode(SM_ATREIAN_PASSPORT.class, 0x12D, idSet); // 5.6
-		addPacketOpcode(SM_GAMEGUARD.class, 0x128, idSet); // 5.6
+		addPacketOpcode(SM_GAMEGUARD.class, 0x129, idSet); // 6.x
 		addPacketOpcode(SM_CUSTOM_PACKET.class, 99999, idSet); // fake packet
 		addPacketOpcode(SM_AFTER_TIME_CHECK.class, 0x126, idSet); // 5.6
 		addPacketOpcode(SM_QUEST_REPEAT.class, 0x124, idSet); // 5.6
@@ -288,16 +288,10 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_MINIONS.class, 0x16A, idSet); // 5.6 TODO
 		addPacketOpcode(SM_EVENT_WINDOW.class, 0x13E, idSet); // 5.8 TODO
 		addPacketOpcode(SM_EVENT_WINDOW_ITEMS.class, 0x154, idSet); // 5.8 TODO
-		// --------------------ABYSS LANDING-------------------------//
-		addPacketOpcode(SM_ABYSS_LANDING_LEVEL.class, 0x13C, idSet); // 5.6 TODO
-		addPacketOpcode(SM_ABYSS_LANDING.class, 0x13D, idSet); // 5.6 TODO
 		// ------------------FAST TRACK PACKETS----------------------//
 		addPacketOpcode(SM_SERVER_IDS.class, 0x116, idSet); // 5.6
 		addPacketOpcode(SM_FAST_TRACK.class, 0x96, idSet);
 		addPacketOpcode(SM_FAST_TRACK_MOVE.class, 0x107, idSet); // 5.6
-		// -------------CREATIVITY_POINTS PACKETS 5.0----------------//
-		addPacketOpcode(SM_CREATIVITY_POINTS.class, 0x5D, idSet);
-		addPacketOpcode(SM_CREATIVITY_POINTS_APPLY.class, 0x5E, idSet);
 		// -----------------LUNA SHOP PACKETS 5.1--------------------//
 		addPacketOpcode(SM_LUNA_SYSTEM_INFO.class, 0x149, idSet); // 5.6
 		addPacketOpcode(SM_LUNA_SYSTEM.class, 0x14A, idSet); // 5.6
@@ -307,11 +301,9 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_MAGIC_MORPH_WINDOW.class, 0x15D, idSet); // 5.6 TODO
 		addPacketOpcode(SM_MAGIC_MORPH_RESULT.class, 0x14E, idSet); // 5.6 TODO
 		// ----------------------MONSTERBOOK-------------------------//
-		addPacketOpcode(SM_MONSTERBOOK_LIST.class, 0x15B, idSet); // 5.6 TODO
-		addPacketOpcode(SM_MONSTERBOOK.class, 0x15C, idSet); // 5.6 TODO
 		addPacketOpcode(SM_UNK_135.class, 0x136, idSet); // TODO After SM_Monsterbook
 		// -------------------EQUIPMENT SETTING----------------------//
-		addPacketOpcode(SM_EQUIPMENT_SETTING.class, 0x165, idSet); // 5.6 TODO
+		addPacketOpcode(SM_EQUIPMENT_SETTING.class, 0x167, idSet); // 6.x EU TODO
 		// -------------------BATTLEFIELD UNION----------------------//
 		//addPacketOpcode(SM_BATTLEFIELD_UNION_REGISTER.class, 0x154, idSet); // 5.6 TODO
 		addPacketOpcode(SM_BATTLEFIELD_UNION.class, 0x156, idSet); // 5.6 TODO
@@ -338,10 +330,12 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_UNK_168.class, 0x168, idSet); // 5.6 TODO
 		addPacketOpcode(SM_SKILL_ANIMATION.class, 0x150, idSet); // 5.6 TODO
 		addPacketOpcode(SM_UNK_15E.class, 0x15E, idSet); // 5.4 TODO
-		addPacketOpcode(SM_UNK_15D.class, 0x162, idSet); // 5.6 TODO Lodas Silver Star
+		addPacketOpcode(SM_SILVER_STAR.class, 0x164, idSet); // 6.x TODO Lodas Silver Star
 		addPacketOpcode(SM_NEVIWIND_CANYON.class, 0x169, idSet); // 5.6 TODO
 		addPacketOpcode(SM_TOWER_OF_CHALLENGE.class, 0xEE, idSet); // 5.6
 		addPacketOpcode(SM_GODSTONE_DESTROY.class, 0x12E, idSet); // 5.6
+		addPacketOpcode(SM_TRANSFORMATION.class, 0x170, idSet); // 6.x TODO
+		addPacketOpcode(SM_CUBIC.class, 0x176, idSet); // 6.x TODO
 		// --------------------UNKNOWN PACKETS-----------------------//
 	}
 

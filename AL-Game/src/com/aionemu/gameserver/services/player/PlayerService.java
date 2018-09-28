@@ -16,13 +16,6 @@
  */
 package com.aionemu.gameserver.services.player;
 
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.aionemu.commons.database.dao.DAOManager;
 import com.aionemu.commons.utils.GenericValidator;
 import com.aionemu.gameserver.configs.main.CacheConfig;
@@ -46,7 +39,7 @@ import com.aionemu.gameserver.dao.OldNamesDAO;
 import com.aionemu.gameserver.dao.PlayerAppearanceDAO;
 import com.aionemu.gameserver.dao.PlayerBindPointDAO;
 import com.aionemu.gameserver.dao.PlayerCooldownsDAO;
-import com.aionemu.gameserver.dao.PlayerCreativityPointsDAO;
+import com.aionemu.gameserver.dao.PlayerCubicsDAO;
 import com.aionemu.gameserver.dao.PlayerDAO;
 import com.aionemu.gameserver.dao.PlayerEffectsDAO;
 import com.aionemu.gameserver.dao.PlayerEmotionListDAO;
@@ -55,7 +48,6 @@ import com.aionemu.gameserver.dao.PlayerEventsWindowDAO;
 import com.aionemu.gameserver.dao.PlayerGameStatsDAO;
 import com.aionemu.gameserver.dao.PlayerLifeStatsDAO;
 import com.aionemu.gameserver.dao.PlayerMacrossesDAO;
-import com.aionemu.gameserver.dao.PlayerMonsterbookDAO;
 import com.aionemu.gameserver.dao.PlayerNpcFactionsDAO;
 import com.aionemu.gameserver.dao.PlayerPunishmentsDAO;
 import com.aionemu.gameserver.dao.PlayerQuestListDAO;
@@ -73,6 +65,7 @@ import com.aionemu.gameserver.dataholders.PlayerInitialData;
 import com.aionemu.gameserver.dataholders.PlayerInitialData.LocationData;
 import com.aionemu.gameserver.dataholders.PlayerInitialData.PlayerCreationData;
 import com.aionemu.gameserver.dataholders.PlayerInitialData.PlayerCreationData.ItemType;
+import com.aionemu.gameserver.model.Race;
 import com.aionemu.gameserver.model.account.Account;
 import com.aionemu.gameserver.model.account.PlayerAccountData;
 import com.aionemu.gameserver.model.gameobjects.Item;
@@ -108,6 +101,12 @@ import com.aionemu.gameserver.world.knownlist.KnownList;
 import com.aionemu.gameserver.world.knownlist.Visitor;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * This class is designed to do all the work related with loading/storing players.<br>
@@ -206,9 +205,7 @@ public class PlayerService {
 		player.setFriendList(DAOManager.getDAO(FriendListDAO.class).load(player));
 		player.setBlockList(DAOManager.getDAO(BlockListDAO.class).load(player));
 		player.setTitleList(DAOManager.getDAO(PlayerTitleListDAO.class).loadTitleList(playerObjId));
-		player.setCP(DAOManager.getDAO(PlayerCreativityPointsDAO.class).loadCP(player));
 		player.setEventWindow(DAOManager.getDAO(PlayerEventsWindowDAO.class).load(player));
-		player.setMonsterbook(DAOManager.getDAO(PlayerMonsterbookDAO.class).load(player));
 		player.setWardrobe(DAOManager.getDAO(PlayerWardrobeDAO.class).load(player));
 		DAOManager.getDAO(Free2PlayDAO.class).loadF2pInfo(player, account.getId());
 		DAOManager.getDAO(PlayerSettingsDAO.class).loadSettings(player);
@@ -216,6 +213,7 @@ public class PlayerService {
 		DAOManager.getDAO(PlayerNpcFactionsDAO.class).loadNpcFactions(player);
 		DAOManager.getDAO(MotionDAO.class).loadMotionList(player);
 		player.setVars(DAOManager.getDAO(PlayerVarsDAO.class).load(player.getObjectId()));
+		player.setMonsterCubic(DAOManager.getDAO(PlayerCubicsDAO.class).load(player)); //6.0
 		player.setEffectController(new PlayerEffectController(player));
 		player.setFlyController(new FlyController(player));
 		PlayerStatFunctions.addPredefinedStatFunctions(player);
@@ -345,15 +343,19 @@ public class PlayerService {
 		newPlayer.setStorage(accountWarehouse, StorageType.ACCOUNT_WAREHOUSE);
 
 		Equipment equipment = new Equipment(newPlayer);
+
 		if (playerCreationData != null) { // player transfer
 			List<ItemType> items = playerCreationData.getItems();
 			for (ItemType itemType : items) {
+				// check item is not PC_ALL and must equal to playerRace
+				if (itemType.getRace() != Race.PC_ALL && itemType.getRace() != newPlayer.getRace()){
+					continue;
+				}
 				int itemId = itemType.getTemplate().getTemplateId();
 				Item item = ItemFactory.newItem(itemId, itemType.getCount());
 				if (item == null) {
 					continue;
 				}
-
 				// When creating new player - all equipment that has slot values will be equipped
 				// Make sure you will not put into xml file more items than possible to equip.
 				ItemTemplate itemTemplate = item.getItemTemplate();
@@ -363,8 +365,7 @@ public class PlayerService {
 					ItemSlot itemSlot = ItemSlot.getSlotFor(itemTemplate.getItemSlot());
 					item.setEquipmentSlot(itemSlot.getSlotIdMask());
 					equipment.onLoadHandler(item);
-				}
-				else {
+				} else {
 					playerInventory.onLoadHandler(item);
 				}
 			}
@@ -396,8 +397,7 @@ public class PlayerService {
 	/**
 	 * Cancel Player deletion process if its possible.
 	 *
-	 * @param accData
-	 *            PlayerAccountData
+	 * @param accData PlayerAccountData
 	 * @return True if deletion was successful canceled.
 	 */
 	public static boolean cancelPlayerDeletion(PlayerAccountData accData) {

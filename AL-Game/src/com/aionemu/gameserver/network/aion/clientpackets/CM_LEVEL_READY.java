@@ -36,13 +36,11 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_UPGRADE_ARCADE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_WINDSTREAM_ANNOUNCE;
 import com.aionemu.gameserver.questEngine.QuestEngine;
 import com.aionemu.gameserver.questEngine.model.QuestEnv;
-import com.aionemu.gameserver.services.AbyssLandingService;
 import com.aionemu.gameserver.services.BaseService;
 import com.aionemu.gameserver.services.FastTrackService;
 import com.aionemu.gameserver.services.SiegeService;
 import com.aionemu.gameserver.services.TownService;
 import com.aionemu.gameserver.services.WeatherService;
-import com.aionemu.gameserver.services.dynamic_world.TowerEntranceService;
 import com.aionemu.gameserver.services.rift.RiftInformer;
 import com.aionemu.gameserver.services.teleport.TeleportService2;
 import com.aionemu.gameserver.services.territory.TerritoryService;
@@ -109,7 +107,6 @@ public class CM_LEVEL_READY extends AionClientPacket {
 		WeatherService.getInstance().loadWeather(activePlayer);
 		// SM_NPC_INFO Bases,Tower
 		BaseService.getInstance().onEnterBaseWorld(activePlayer);
-		TowerEntranceService.getInstance().onEnterTowerWorld(activePlayer);
 
 		// SM_RIFT_ANNOUNCE
 		RiftInformer.sendRiftsInfo(activePlayer);
@@ -151,8 +148,6 @@ public class CM_LEVEL_READY extends AionClientPacket {
 		TerritoryService.getInstance().onEnterWorld(activePlayer);
 		// Base 4.3
 		BaseService.getInstance().onEnterBaseWorld(activePlayer);
-		// Abyss Landing 4.9.1
-		AbyssLandingService.getInstance().onEnterWorld(activePlayer);
 		activePlayer.getEffectController().updatePlayerEffectIcons();
 		sendPacket(SM_CUBE_UPDATE.cubeSize(StorageType.CUBE, activePlayer));
 		TeleportService2.highdaevaTransformation(activePlayer);
