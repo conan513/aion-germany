@@ -272,17 +272,17 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_FATIGUE.class, 0xB3, idSet);
 		addPacketOpcode(SM_HOTSPOT_TELEPORT.class, 0x12A, idSet); // 5.6
 		addPacketOpcode(SM_UPGRADE_ARCADE.class, 0x12C, idSet); // 5.6
-		addPacketOpcode(SM_ATREIAN_PASSPORT.class, 0x12D, idSet); // 5.6
 		addPacketOpcode(SM_GAMEGUARD.class, 0x129, idSet); // 6.x
 		addPacketOpcode(SM_CUSTOM_PACKET.class, 99999, idSet); // fake packet
 		addPacketOpcode(SM_AFTER_TIME_CHECK.class, 0x126, idSet); // 5.6
 		addPacketOpcode(SM_QUEST_REPEAT.class, 0x124, idSet); // 5.6
-		addPacketOpcode(SM_EVENT_BUFF.class, 0x11C, idSet); // 5.8
+		// addPacketOpcode(SM_EVENT_BUFF.class, 0x11C, idSet); // 5.8
 		addPacketOpcode(SM_BOOST_EVENTS.class, 0x148, idSet); // 5.6 TODO
 		addPacketOpcode(SM_SPLIT_ITEM.class, 0xEB, idSet); // 5.4 TODO
 		addPacketOpcode(SM_TUNE_RESULT.class, 0x122, idSet); // 5.6 TODO
 		addPacketOpcode(SM_PLAYER_PROTECTION.class, 0x100, idSet); // 5.6
 		addPacketOpcode(SM_FLAG_INFO.class, 0x152, idSet); // 5.6
+		addPacketOpcode(SM_FLAG_UPDATE.class, 0x153, idSet); // 5.6
 		addPacketOpcode(SM_MAC_ADDRESS.class, 0x166, idSet); // 5.6 TODO
 		addPacketOpcode(SM_CHECK_MAIL_SIZE.class, 0x95, idSet); // 5.4 TODO
 		addPacketOpcode(SM_MINIONS.class, 0x16A, idSet); // 5.6 TODO
@@ -298,8 +298,6 @@ public class ServerPacketsOpcodes {
 		// ------------------MAGIC MORPH + CRAFT---------------------//
 		addPacketOpcode(SM_MAGIC_CRAFT_ANIMATION.class, 0x14D, idSet); // 5.6 TODO
 		addPacketOpcode(SM_MAGIC_CRAFT.class, 0x14C, idSet); // 5.6 TODO
-		addPacketOpcode(SM_MAGIC_MORPH_WINDOW.class, 0x15D, idSet); // 5.6 TODO
-		addPacketOpcode(SM_MAGIC_MORPH_RESULT.class, 0x14E, idSet); // 5.6 TODO
 		// ----------------------MONSTERBOOK-------------------------//
 		addPacketOpcode(SM_UNK_135.class, 0x136, idSet); // TODO After SM_Monsterbook
 		// -------------------EQUIPMENT SETTING----------------------//
@@ -319,19 +317,21 @@ public class ServerPacketsOpcodes {
 		addPacketOpcode(SM_UNK_A5.class, 0xA5, idSet);
 		addPacketOpcode(SM_UNK_127.class, 0x127, idSet);
 		addPacketOpcode(SM_UNK_98.class, 0x98, idSet); // TODO
-		addPacketOpcode(SM_UNK_133.class, 0x133, idSet); // TODO
+		addPacketOpcode(SM_ABYSS_RANK_POINTS.class, 0x133, idSet); // TODO
 		addPacketOpcode(SM_UNK_7E.class, 0x7E, idSet); // TODO
 		addPacketOpcode(SM_UNK_14F.class, 0x14F, idSet); // 5.6 TODO
 		addPacketOpcode(SM_UNK_117.class, 0x118, idSet); // 5.6 TODO Kisk: Stigmameister
 		addPacketOpcode(SM_UNK_13B.class, 0x13B, idSet); // 5.1 TODO
-		addPacketOpcode(SM_UNK_158.class, 0x159, idSet); // 5.3 TODO SM_RANK_LIST
-		addPacketOpcode(SM_MY_DOCUMENTATION.class, 0x15A, idSet); // 5.6 TODO
+		addPacketOpcode(SM_RANK_LIST.class, 0x159, idSet); // 6.x TODO
+		addPacketOpcode(SM_MY_DOCUMENTATION.class, 0x15A, idSet); // 6.x TODO
 		addPacketOpcode(SM_UNK_12B.class, 0x12B, idSet); // 5.6 TODO
 		addPacketOpcode(SM_UNK_168.class, 0x168, idSet); // 5.6 TODO
+		addPacketOpcode(SM_UNK_165.class, 0x165, idSet); // 6.x TODO after/before Title_Info
+		addPacketOpcode(SM_UNK_11C.class, 0x11C, idSet); // 6.x TODO after/before Emotion
 		addPacketOpcode(SM_SKILL_ANIMATION.class, 0x150, idSet); // 5.6 TODO
 		addPacketOpcode(SM_UNK_15E.class, 0x15E, idSet); // 5.4 TODO
 		addPacketOpcode(SM_SILVER_STAR.class, 0x164, idSet); // 6.x TODO Lodas Silver Star
-		addPacketOpcode(SM_NEVIWIND_CANYON.class, 0x169, idSet); // 5.6 TODO
+		addPacketOpcode(SM_NEVIWIND_CANYON.class, 0x16B, idSet); // 6.x TODO
 		addPacketOpcode(SM_TOWER_OF_CHALLENGE.class, 0xEE, idSet); // 5.6
 		addPacketOpcode(SM_GODSTONE_DESTROY.class, 0x12E, idSet); // 5.6
 		addPacketOpcode(SM_TRANSFORMATION.class, 0x170, idSet); // 6.x TODO

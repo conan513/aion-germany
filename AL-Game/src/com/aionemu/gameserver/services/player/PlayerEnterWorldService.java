@@ -73,6 +73,7 @@ import com.aionemu.gameserver.model.team2.alliance.PlayerAllianceService;
 import com.aionemu.gameserver.model.team2.group.PlayerGroupService;
 import com.aionemu.gameserver.network.aion.AionConnection;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK;
+import com.aionemu.gameserver.network.aion.serverpackets.SM_ABYSS_RANK_POINTS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_AFTER_TIME_CHECK;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_BLOCK_LIST;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_CHANNEL_INFO;
@@ -107,9 +108,7 @@ import com.aionemu.gameserver.network.aion.serverpackets.SM_SYSTEM_MESSAGE;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_TITLE_INFO;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UI_SETTINGS;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_106;
-import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_133;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_60;
-//import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_154;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_7E;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_A5;
 import com.aionemu.gameserver.network.aion.serverpackets.SM_UNK_BD;
@@ -141,7 +140,6 @@ import com.aionemu.gameserver.services.WarehouseService;
 import com.aionemu.gameserver.services.abyss.AbyssSkillService;
 import com.aionemu.gameserver.services.conquerer_protector.ConquerorsService;
 import com.aionemu.gameserver.services.craft.RelinquishCraftStatus;
-import com.aionemu.gameserver.services.events.AtreianPassportService;
 import com.aionemu.gameserver.services.events.BoostEventService;
 import com.aionemu.gameserver.services.events.EventService;
 import com.aionemu.gameserver.services.events.EventWindowService;
@@ -621,8 +619,8 @@ public final class PlayerEnterWorldService {
 			// SM_ABYSS_RANK
 			client.sendPacket(new SM_ABYSS_RANK(player.getAbyssRank()));
 
-			// SM_133 - huge list ....
-			client.sendPacket(new SM_UNK_133()); // TODO
+			// SM_ABYSS_RANK_POINTS - huge list ....
+			client.sendPacket(new SM_ABYSS_RANK_POINTS()); // TODO
 
 			// SM_STATS_INFO
 			client.sendPacket(new SM_STATS_INFO(player)); // offi 4.9.1
@@ -655,9 +653,6 @@ public final class PlayerEnterWorldService {
 
 			// SM_SHUGO_SWEEP
 			ShugoSweepService.getInstance().onLogin(player);
-
-			// SM_ATREIAN_PASSPORT
-			AtreianPassportService.getInstance().onLogin(player);
 
 			// SM_BROKER_SERVICE
 			BrokerService.getInstance().onPlayerLogin(player);

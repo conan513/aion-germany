@@ -98,7 +98,6 @@ import com.aionemu.gameserver.services.WorldBuffService;
 import com.aionemu.gameserver.services.abyss.AbyssRankUpdateService;
 import com.aionemu.gameserver.services.conquerer_protector.ConquerorsService;
 import com.aionemu.gameserver.services.drop.DropRegistrationService;
-import com.aionemu.gameserver.services.events.AtreianPassportService;
 import com.aionemu.gameserver.services.events.BoostEventService;
 import com.aionemu.gameserver.services.events.EventService;
 import com.aionemu.gameserver.services.events.EventWindowService;
@@ -120,11 +119,11 @@ import com.aionemu.gameserver.services.player.LunaShopService;
 import com.aionemu.gameserver.services.player.PlayerCubicService;
 import com.aionemu.gameserver.services.player.PlayerEventService;
 import com.aionemu.gameserver.services.player.PlayerLimitService;
+import com.aionemu.gameserver.services.ranking.PlayerRankingUpdateService;
 import com.aionemu.gameserver.services.reward.OnlineBonus;
 import com.aionemu.gameserver.services.reward.RewardService;
 import com.aionemu.gameserver.services.teleport.HotspotTeleportService;
 import com.aionemu.gameserver.services.territory.TerritoryService;
-import com.aionemu.gameserver.services.toypet.MinionService;
 import com.aionemu.gameserver.services.transfers.PlayerTransferService;
 import com.aionemu.gameserver.spawnengine.SpawnEngine;
 import com.aionemu.gameserver.spawnengine.TemporarySpawnEngine;
@@ -285,9 +284,6 @@ public class GameServer {
 		if (EventsConfig.ENABLE_EVENT_SERVICE) {
 			EventService.getInstance().start();
 		}
-		if (EventsConfig.ENABLE_ATREIAN_PASSPORT) {
-			AtreianPassportService.getInstance().onStart();
-		}
 		
 		RiftService.getInstance().initRifts();
 		TemporarySpawnEngine.spawnAll();
@@ -318,8 +314,6 @@ public class GameServer {
 		if (EventsConfig.ENABLE_BOOST_EVENTS) {
 			BoostEventService.getInstance().onStart();
 		}
-		Util.printSsSection("Atreian Passport");
-		AtreianPassportService.getInstance().onStart();
 		Util.printSsSection("HTML");
 		HTMLCache.getInstance();
 		if (CustomConfig.ENABLE_REWARD_SERVICE) {
@@ -328,7 +322,7 @@ public class GameServer {
 		if (WeddingsConfig.WEDDINGS_ENABLE) {
 			WeddingService.getInstance();
 		}
-		Util.printSsSection("Sheduled Services");
+		Util.printSsSection("Scheduled Services");
 		LimitedItemTradeService.getInstance().start();
 		if (AutoGroupConfig.AUTO_GROUP_ENABLE && AutoGroupConfig.DREDGION2_ENABLE)
 			DredgionService.getInstance().start();
@@ -353,6 +347,7 @@ public class GameServer {
 		if (ConquerorProtectorConfig.ENABLE_GUARDIAN_PVP)
 			ConquerorsService.getInstance().initConquerorPvPSystem();
 		AbyssRankUpdateService.getInstance().scheduleUpdate();
+		PlayerRankingUpdateService.getInstance().onStart();
 		/**
 		 * Schedules Garbage Collector to be launched at the specified time to be optimized unused memory. (Avoids OutOfMemoryException)
 		 */
