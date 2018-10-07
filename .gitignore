@@ -24,3 +24,5 @@ hs_err_pid*
 AL-Chat/build
 AL-Game/build
 AL-Login/build
+
+*.orig
