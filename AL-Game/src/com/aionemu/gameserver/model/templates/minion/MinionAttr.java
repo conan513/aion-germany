@@ -21,31 +21,41 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-/**
- * @author Falke_34
- */
+import com.aionemu.gameserver.model.stats.container.StatEnum;
+import com.aionemu.gameserver.skillengine.change.Func;
+
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MinionEvolved")
-public class MinionEvolved {
+@XmlType(name = "MinionAttr")
+public class MinionAttr {
 
-	@XmlAttribute(name = "itemId")
-	private int itemId;
+	@XmlAttribute(required = true)
+	protected StatEnum stat;
+	@XmlAttribute(required = true)
+	protected Func func;
+	@XmlAttribute(required = true)
+	protected int value;
 
-	@XmlAttribute(name = "evolvedNum")
-	private int evolvedNum;
-
-	@XmlAttribute(name = "evolvedCost")
-	private int evolvedCost;
-
-	public int getItemId() {
-		return this.itemId;
+	public StatEnum getStat() {
+		return stat;
 	}
 
-	public int getEvolvedNum() {
-		return this.evolvedNum;
+	public void setStat(StatEnum value) {
+		this.stat = value;
 	}
 
-	public int getEvolvedCost() {
-		return this.evolvedCost;
+	public Func getFunc() {
+		return func;
+	}
+
+	public void setFunc(Func value) {
+		this.func = value;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
 	}
 }

@@ -507,6 +507,10 @@ public class Player extends Creature {
 		return setMinionSpawned;
 	}
 
+	public boolean isMagicalTypeClass() {
+		return playerCommonData.getPlayerClass() == PlayerClass.ARTIST || playerCommonData.getPlayerClass() == PlayerClass.BARD || playerCommonData.getPlayerClass() == PlayerClass.CLERIC || playerCommonData.getPlayerClass() == PlayerClass.SORCERER || playerCommonData.getPlayerClass() == PlayerClass.SPIRIT_MASTER || playerCommonData.getPlayerClass() == PlayerClass.RIDER;
+	}
+
 	/**
 	 * Gets this players Friend List
 	 *
@@ -3105,18 +3109,18 @@ public class Player extends Creature {
 	 * Add Tag Wedding
 	 */
 	public int getPartnerId() { 
-		return this.partnerId;
+		return partnerId;
 	}
 
 	/**
 	 * Cubics System
 	 */
 	public PlayerMCList getMonsterCubic() {
-		return this.mc;
+		return mc;
 	}
 
-	public void setMonsterCubic(PlayerMCList playerABList) {
-		this.mc = playerABList;
+	public void setMonsterCubic(PlayerMCList playerMcList) {
+		this.mc = playerMcList;
 	}
 
 	/**
